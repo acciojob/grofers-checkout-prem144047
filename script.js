@@ -1,33 +1,19 @@
-const getSumBtn = document.createElement("button");
-getSumBtn.append("Get Total Price");
-document.body.appendChild(getSumBtn);
+const prices = document.querySelectorAll(".price");
 
-const getSum = () => {
-//Add your code here
-  // Step 1: Select all price elements
-const priceElements = document.querySelectorAll('.price');
+    let total = 0;
+    prices.forEach(priceCell => {
+      total += parseFloat(priceCell.textContent) || 0;
+    });
 
-// Step 2: Initialize total price variable
-let totalPrice = 0;
+    // Create a new row for the total
+    const totalRow = document.createElement("tr");
+    totalRow.classList.add("total-row");
 
-// Step 3: Loop through the price elements and sum the prices
-priceElements.forEach(priceElement => {
-    // Convert the text content to a number and add to totalPrice
-    totalPrice += parseFloat(priceElement.textContent) || 0; // Handle NaN
-});
+    const totalCell = document.createElement("td");
+    totalCell.colSpan = 2; // span across both columns
+    totalCell.textContent = `Total Price: ₹${total}`;
 
-// Step 4: Create a new row for the total price
-const table = document.querySelector('table'); // Assuming there's only one table
-const newRow = document.createElement('tr');
-const totalCell = document.createElement('td');
+    totalRow.appendChild(totalCell);
 
-// Set the text content of the cell to the total price
-totalCell.textContent = `Total Price: ${totalPrice.toFixed(2)}`; // Format to 2 decimal places
-
-// Step 5: Append the total cell to the new row and the new row to the table
-newRow.appendChild(totalCell);
-table.appendChild(newRow);
-};
-
-getSumBtn.addEventListener("click", getSum);
-
+    // Append the total row to the table
+    document.getElementById("groceryTable").appendChild(totalRow);
